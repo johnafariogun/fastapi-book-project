@@ -25,7 +25,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Tests with Pytest
-        run: pytest
+        run: pytest --maxfail=1
 
   deploy:
     name: Deploy to AWS EC2
@@ -55,13 +55,9 @@ jobs:
             sudo systemctl enable docker
             sudo systemctl restart docker
 
-            # Remove old app directory
-            sudo rm -rf /home/ubuntu/app
-            sudo mkdir -p /home/ubuntu/app
-            sudo chown ubuntu:ubuntu /home/ubuntu/app
-            # Clone the latest code from GitHub
-            git clone https://github.com/johnafariogun/fastapi-book-project /home/ubuntu/app
             cd /home/ubuntu/app
+            # Clone the latest code from GitHub
+            git pull origin main
 
             # Stop & remove the old container if it exists
             sudo docker stop fastapi-nginx || true
