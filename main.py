@@ -22,4 +22,4 @@ async def health_check():
     """Checks if server is active."""
     return {"status": "active"}
 
-#testing git pull on server
+
