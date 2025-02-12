@@ -45,7 +45,7 @@ async def create_book(book: Book):
     "/", response_model=OrderedDict[int, Book], status_code=status.HTTP_200_OK
 )
 async def get_books() -> OrderedDict[int, Book]:
-    #return db.get_books()
+    return db.get_books()
 
 
 @router.get(
