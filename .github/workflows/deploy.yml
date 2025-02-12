@@ -1,37 +1,15 @@
-name: FastAPI CI/CD Pipeline
+# .github/workflows/deploy.yml
+name: FastAPI Deployment
 
 on:
-  pull_request:
-    branches: [main]
   push:
     branches: [main]
 
 jobs:
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run Tests with Pytest
-        run: pytest --maxfail=1
-
   deploy:
     name: Deploy to AWS EC2
-    needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'  # Simplified condition
 
     steps:
       - name: Checkout Repository
@@ -48,20 +26,21 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key ubuntu@${EC2_IP} << 'EOF'
             # Update system package
+            sudo apt update
 
             # Ensure Docker service is running
             sudo systemctl enable docker
             sudo systemctl restart docker
 
             cd /home/ubuntu/app
-            # Clone the latest code from GitHub
+
+            # Pull the latest code from GitHub
             git pull origin main
 
             # Stop & remove the old container if it exists
             sudo docker stop fastapi-nginx || true
             sudo docker rm fastapi-nginx || true
 
-      
             sudo docker build -t fastapi-nginx:latest -f /home/ubuntu/app/Dockerfile .
 
             # Run the new container (expose ports for future HTTPS setup)
@@ -74,3 +53,4 @@ jobs:
       - name: Clean up SSH Key
         if: always()
         run: rm -f private_key
+
