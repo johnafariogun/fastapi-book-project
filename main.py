@@ -1,4 +1,5 @@
-'''from fastapi import FastAPI
+'''
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.router import api_router
@@ -21,3 +22,4 @@ app.include_router(api_router, prefix=settings.API_PREFIX)
 async def health_check():
     """Checks if server is active."""
     return {"status": "active"}
+'''
