@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+'''
+testing bad code
+'''
+"""
 from api.router import api_router
 from core.config import settings
 
