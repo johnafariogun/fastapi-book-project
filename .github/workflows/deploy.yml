@@ -14,7 +14,7 @@ jobs:
         with:
             host: ${{ secrets.EC2_IP }}
             username: ubuntu
-            key: ${{ secrets.AWS_NEW_GEN_PRIVATE_KEY }}
+            key: ${{ secrets.AWS_GEN_PRIVATE_KEY }}
             script: |
                 cd app
                 git stash
