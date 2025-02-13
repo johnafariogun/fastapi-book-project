@@ -47,6 +47,9 @@ async def create_book(book: Book):
 async def get_books() -> OrderedDict[int, Book]:
     return db.get_books()
 
+@router.get('/good_merge')
+async def good_merge():
+    return {"message":"this is good code"}
 
 @router.get(
     "/{book_id}", response_model=OrderedDict[int, Book], status_code=status.HTTP_200_OK
