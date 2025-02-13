@@ -46,7 +46,9 @@ async def create_book(book: Book):
 )
 async def get_books() -> OrderedDict[int, Book]:
     return db.get_books()
-
+@router.get('/bew/')
+async def bee():
+    return {}
 
 @router.get(
     "/{book_id}", response_model=OrderedDict[int, Book], status_code=status.HTTP_200_OK
