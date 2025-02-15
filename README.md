@@ -45,7 +45,8 @@ fastapi-book-project/
 - Pydantic
 - pytest
 - uvicorn
-- Docker
+- Systemd
+- gunicorn
 - AWS(EC2, IAM)
 - Nginx
 - GIthub Actions
